@@ -93,7 +93,7 @@ data "gitlab_project" "minte" {
 resource "gitlab_project_cluster" "minte_kubernetes" {
     project = data.gitlab_project.minte.id
     name = "minte_cluster"
-    domain = "dev.minte.tv"
+    domain = "cluster.minte.tv"
     enabled = true
     kubernetes_api_url = digitalocean_kubernetes_cluster.cl01.endpoint
     kubernetes_token = digitalocean_kubernetes_cluster.cl01.kube_config[0].token
@@ -101,5 +101,5 @@ resource "gitlab_project_cluster" "minte_kubernetes" {
     kubernetes_namespace = "minte"
     kubernetes_authorization_type = "rbac"
     environment_scope = "*"
-    
+
 }
