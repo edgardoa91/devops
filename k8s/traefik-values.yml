@@ -1,0 +1,23 @@
+image: traefik
+dashboard:
+  enabled: true
+  domain: traefik.minte.tv                     # put a (sub)domain here where you want to access the traefik dashboard
+serviceType: LoadBalancer
+rbac:
+  enabled: true
+ssl:
+  enabled: true                                # Enables SSL
+  enforced: true                               # Redirects HTTP to HTTPS
+acme:
+  enabled: true                                # Enables Let's Encrypt certificates
+  staging: false                               # Use Lets Encrypt staging area for this example. For production purposes set this to false
+  email: contact@minte.tv                  # Email address that Let's Encrypt uses to notify about certificate expiry etc.
+  challengeType: "dns-01"
+  dnsProvider:
+    name:  digitalocean                        # This is why you need your domain to be under Digital Ocean control
+    digitalocean:
+      DO_AUTH_TOKEN: $DIGITALOCEAN_TOKEN
+  domains:
+    enabled: true
+    domainsList:
+      - main: traefik.minte.tv               # domain that belongs to this certificate

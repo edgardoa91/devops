@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minte
+  labels:
+    app: minte
+spec:
+  revisionHistoryLimit: 5
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minte
+  template:
+    metadata:
+      labels:
+        app: minte
+    spec:
+      imagePullSecrets:
+        - name: "gitlab.com"
+      containers:
+      - name: minte
+        image: registry.gitlab.com/mintetv/minte:latest
+        imagePullPolicy: Always
+        name: minte-deployment
+        resources: {}
+        ports:
+          - containerPort: 8001
+        env:
+          - name: SECRET_KEY_BASE
+            value: $SECRET_KEY_BASE
+          - name: CRYPTO_KEY
+            value: $CRYPTO_KEY
+          - name: MINIO_ACCESS_KEY
+            value: $MINIO_ACCESS_KEY
+          - name: MINIO_SECRET_KEY
+            value: $MINIO_SECRET_KEY
+          - name: DB_USER
+            value: $DB_USER
+          - name: DB_PASSWORD
+            value: $DB_PASS
+          - name: DB_NAME
+            value: "minte_prod"
+          - name: DB_HOST
+            value: $DB_CLUSTER
+          - name: DB_PORT
+            value: "25060"
+          - name: DATABASE_URL
+            value: ecto://$DB_USER:$DB_PASS@$DB_CLUSTER:25060/minte_prod
+          - name: PORT
+            value: "8001"
+          - name: APP_HOSTNAME
+            value: $DOMAIN

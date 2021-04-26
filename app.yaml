@@ -1,0 +1,7 @@
+env: flex
+runtime: custom
+beta_settings:
+  cloud_sql_instances: minte-static:us-central1:minte-db-1
+
+includes:
+  - env_variables.yaml

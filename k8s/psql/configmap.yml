@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-configuration
+  labels:
+    app: postgres
+data:
+  POSTGRES_DB: mintedb-dev
+  POSTGRES_USER: minte
+  POSTGRES_PASSWORD: verystrongpassword

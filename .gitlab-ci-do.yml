@@ -1,0 +1,36 @@
+image: registry.gitlab.com/mintetv/minte:latest
+variables:
+  # TF_STATE_NAME: default
+  # TF_CACHE_KEY: default
+  TF_ROOT: k8s
+
+cache:
+  key: minte-production
+  paths:
+    - ${TF_ROOT}/.terraform
+
+before_script:
+  - cd ${TF_ROOT}
+
+stages:
+  # - test ## Create testing in this step
+  # - prepare
+  # - build
+  - deploy
+
+
+deploy:
+  stage: deploy
+
+  image:
+    name: registry.gitlab.com/mintetv/minte/prod:latest
+    entrypoint: [""]
+  script:
+    - cat prod/deploy.yml | envsubst | kubectl apply -f -
+    - cat prod/service.yml | envsubst | kubectl apply -f -
+    - cat prod/ingress.yml | envsubst | kubectl apply -f -
+  # dependencies:
+  #   - plan
+  # when: manual
+  only:
+    - dev
